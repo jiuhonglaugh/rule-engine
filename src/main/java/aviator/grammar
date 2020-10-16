@@ -1,0 +1,42 @@
+(10) 语法手册
+
+数据类型
+Number类型：数字类型，支持两种类型，分别对应Java的Long和Double，也就是说任何整数都将被转换为Long，而任何浮点数都将被转换为Double，包括用户传入的数值也是如此转换。不支持科学计数法，仅支持十进制。如-1、100、2.3等。
+
+String类型： 字符串类型，单引号或者双引号括起来的文本串，如'hello world'，变量如果传入的是String或者Character也将转为String类型。
+
+Bool类型： 常量true和false，表示真值和假值，与java的Boolean.TRUE和Boolean.False对应。
+
+Pattern类型： 类似Ruby、perl的正则表达式，以//括起来的字符串，如//d+/，内部实现为java.util.Pattern。
+
+变量类型： 与Java的变量命名规则相同，变量的值由用户传入，如"a"、"b"等
+
+nil类型: 常量nil,类似java中的null，但是nil比较特殊，nil不仅可以参与==、!=的比较，也可以参与>、>=、<、<=的比较，Aviator规定任何类型都n大于nil除了nil本身，nil==nil返回true。用户传入的变量值如果为null，那么也将作为nil处理，nil打印为null。
+
+算术运算符
+Aviator支持常见的算术运算符，包括+ - <tt></tt> / % 五个二元运算符，和一元运算符"-"。其中 - <tt></tt> / %和一元的"-"仅能作用于Number类型。
+
+"+"不仅能用于Number类型，还可以用于String的相加，或者字符串与其他对象的相加。Aviator规定，任何类型与String相加，结果为String。
+
+逻辑运算符
+Avaitor的支持的逻辑运算符包括，一元否定运算符"!"，以及逻辑与的"&&"，逻辑或的"||"。逻辑运算符的操作数只能为Boolean。
+
+关系运算符
+Aviator支持的关系运算符包括"<" "<=" ">" ">=" 以及"=="和"!=" 。
+&&和||都执行短路规则。
+
+关系运算符可以作用于Number之间、String之间、Pattern之间、Boolean之间、变量之间以及其他类型与nil之间的关系比较，不同类型除了nil之外不能相互比较。
+
+Aviator规定任何对象都比nil大除了nil之外。
+
+匹配运算符
+匹配运算符"=~"用于String和Pattern的匹配，它的左操作数必须为String，右操作数必须为Pattern。匹配成功后，Pattern的分组将存于变量$num，num为分组索引。
+
+三元运算符
+Aviator没有提供if else语句，但是提供了三元运算符 "?:"，形式为 bool ? exp1: exp2。 其中bool必须为结果为Boolean类型的表达式，而exp1和exp2可以为任何合法的Aviator表达式，并且不要求exp1和exp2返回的结果类型一致。
+
+两种模式
+默认AviatorEvaluator以编译速度优先：
+AviatorEvaluator.setOptimize(AviatorEvaluator.COMPILE);
+你可以修改为运行速度优先，这会做更多的编译优化：
+AviatorEvaluator.setOptimize(AviatorEvaluator.EVAL);
