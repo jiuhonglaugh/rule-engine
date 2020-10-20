@@ -24,12 +24,12 @@ public class Test {
 //        test();
 //        test2();
 //        test3();
-//        test4();
+        test4();
 //        test5();
 //        test6();
 //        test7();
 //        test8();
-        test9();
+//        test9();
     }
 
     /**
@@ -123,13 +123,16 @@ public class Test {
      */
     private static void test4() {
         String expression = "a*(b+c)>100";
+        String test1 = "success>20||(success/count)*100>40";
         // 编译表达式
-        Expression compiledExp = AviatorEvaluator.compile(expression);
+        Expression compiledExp = AviatorEvaluator.compile(test1);
 
         Map<String, Object> env = new HashMap<>();
-        env.put("a", 100.3);
-        env.put("b", 45);
-        env.put("c", -199.100);
+//        env.put("a", 100.3);
+//        env.put("b", 45);
+//        env.put("c", -199.100);
+        env.put("success",30);
+        env.put("count",100);
 
         // 执行表达式
         Boolean result = (Boolean) compiledExp.execute(env);

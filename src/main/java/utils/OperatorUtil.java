@@ -5,27 +5,24 @@ import com.googlecode.aviator.Expression;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.Map;
 
 public class OperatorUtil {
     private static ScriptEngine engine;
 
-    static {
-        OperatorUtil.engine = null;
-    }
-
     public static ScriptEngine getEngine() {
         if (OperatorUtil.engine == null) {
             try {
                 final ScriptEngineManager manager = new ScriptEngineManager();
-                (OperatorUtil.engine = manager.getEngineByName("javascript")).getBindings(100);
+                (engine = manager.getEngineByName("JavaScript")).getBindings(100);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         } else {
-            OperatorUtil.engine.createBindings();
+            engine.createBindings();
         }
-        return OperatorUtil.engine;
+        return engine;
     }
 
     public static Boolean getExp(final String expression, final Map<String, Object> map) {
@@ -50,10 +47,11 @@ public class OperatorUtil {
         }
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws ScriptException {
         final String topicEventList = "a==1&&b==2&&user_name like '%h%'";
         final Expression compiledExp = AviatorEvaluator.compile("string.contains('hello','h')");
         final Boolean execute = (Boolean) compiledExp.execute();
         System.out.println("execute = " + execute);
+        System.out.println(getEngine().eval("print(1111*10);"));
     }
 }
